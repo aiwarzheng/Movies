@@ -1,0 +1,48 @@
+﻿@model Movies.Domain.Entities.Movie
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="mod_movie_detail" ng-controller="DetailController">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5 movie_poster">
+                <img ng-src="@Model.Poster" on-error-src="~/Content/images/movie.jpg" />
+            </div>
+            <div class="col-sm-7 movie_detail">
+                <h3>@Model.Title</h3>
+                <dl class="movie_info">
+                    <dd class="movie_info_item">
+                        <strong>Director:</strong>
+                        <span class="movie_info_item_content">@Model.Director</span>
+                    </dd>
+                    <dd class="movie_info_item">
+                        <strong>Actors:</strong>
+                        <span class="movie_info_item_content">@Model.Actors</span>
+                    </dd>
+                    <dd class="movie_info_item">
+                        <strong>Genre:</strong>
+                        <span class="movie_info_item_content">@Model.Genre</span>
+                    </dd>
+                    <dd class="movie_info_item">
+                        <strong>Country:</strong>
+                        <span class="movie_info_item_content">@Model.Country</span>
+                    </dd>
+                    <dd class="movie_info_item">
+                        <h4>Plot:</h4>
+                        <p class="movie_info_item_content">@Model.Plot</p>
+                    </dd>
+                </dl>
+                <div class="movie_add_cart">
+                    <p class="movie_detail_price">@Model.Price.ToString("c")</p>
+                    <a ng-href="/cart/add?id=@Model.ID" class="btn btn-success">Add To Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

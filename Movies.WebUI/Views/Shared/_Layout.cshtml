@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/bundles/css")
+</head>
+<body ng-app="myMovies" ng-controller="MovieController">
+    <div class="navbar navbar-fixed-top">
+        <div class="head_line"></div>
+        <div class="container mod-normal hidden-xs">
+            <div class="navbar-header">
+                @Html.ActionLink("Movies", "Index", "Movies", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="mod-normal-cart">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("index", "cart")"><i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i><span class="badge">{{cartBadge}}</span></a></li>
+                </ul>
+            </div>
+            <div class="nav navbar-nav search" ng-show="canSearch">
+                @using (Html.BeginForm("query", "movies", FormMethod.Get, new { @class = "search-form cf", id = "searchform", ng_submit="query($event)" }))
+                {
+                    <div class="search_inner">
+                        <label class="sr-only" for="keywords">Search</label>
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <div class="search_keywords">
+                            @Html.TextBox("keywords", "{{keywords}}", new { @class = "search_input", placeholder = "Star Wars: The Force Awakens", id = "search_keywords", ng_model="keywords" })
+                        </div>
+                        <button class="search_btn" type="submit">
+                            <span class="btn_inner">Search</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="container mod_sm hidden-sm hidden-md hidden-lg">
+            <div class="row">
+                <div class="col-sm-6 header_sm">
+                    @Html.ActionLink("Movies", "Index", "Movies", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="col-sm-6 mod-sm-cart">
+                    <a class="sm-cart" href="@Url.Action("cart")"><i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i><span class="badge">10</span></a>
+                </div>
+            </div>
+            <div class="row" ng-show="canSearch">
+                <div class="search_sm col-sm-12">
+                    @using (Html.BeginForm("query", "movies", FormMethod.Get, new { @class = "search-form cf", id = "searchform", ng_submit = "query($event)" }))
+                    {
+                        <div class="search_inner">
+                            <label class="sr-only" for="keywords">Search</label>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            <div class="search_keywords">
+                                @Html.TextBox("keywords", "{{keywords}}", new { @class = "search_input", placeholder = "Star Wars: The Force Awakens", id = "search_keywords", ng_model = "keywords" })
+                            </div>
+                            <button class="search_btn_sm" type="submit">
+                                <span class="btn_inner">Search</span>
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <footer id="footer">
+        <div class="container">
+            <div class="row row-bottom-padded-sm">
+                <div class="col-md-12">
+                    <p class="copyright text-center">&copy; @DateTime.Now.Year Movies. All Rights Reserved.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <ul class="social social-circle">
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/scripts")
+</body>
+</html>

@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Movies";
+}
+
+<div class="mod_movies_container">
+    <div class="container subscribe">
+        <div class="alert alert-success alert-dismissable" ng-show="showSubscribeSuccess">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Thank you for your subscribe.</strong>
+        </div>
+        <div class="alert alert-danger alert-dismissable" ng-show="showSubscribeFail">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Fail</strong>Please try again.
+        </div>
+
+        @using (Html.BeginForm("subscribe", "Movies", FormMethod.Post, new { id = "newsletter", ng_submit = "subscribe($event)" }))
+        {
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2 col-sm-6">
+                    <div class="form-group">
+                        @Html.TextBox("email", "", new { type = "email", @class = "form-control email_input", id = "email", placeholder = "Enter your email address...", required = "required", aria_required = "true", ng_model = "email" })
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <button type="submit" class="btn btn-block" title="We'll send you newsletters. We won't spam you. Scout's honor.">
+                        Subscribe to Movies NewsLetters&nbsp;&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="query_panel">
+        <div class="container">
+            <div class="mod_filter">
+                <div class="filter_line">
+                    <span class="label">genre:</span>
+                    <div class="filter_content">
+                        <button ng-repeat="m in genre.items" ng-click="$parent.filterMovie('genre', m)" ng-class="{true:'btn-link item current', false:'btn-link item'}[m===genre.current]">{{m}}</button>
+                    </div>
+                </div>
+
+                <div class="filter_line">
+                    <span class="label">country:</span>
+                    <div class="filter_content">
+                        <button ng-repeat="m in country.items" ng-click="$parent.filterMovie('country', m)" ng-class="{true:'btn-link item current', false:'btn-link item'}[m===country.current]">{{m}}</button>
+                    </div>
+                </div>
+
+                <div class="filter_line">
+                    <span class="label">year:</span>
+                    <div class="filter_content">
+                        <button ng-repeat="m in year.items" ng-click="$parent.filterMovie('year', m)" ng-class="{true:'btn-link item current', false:'btn-link item'}[m===year.current]">{{m}}</button>
+                    </div>
+                </div>
+
+                <div class="filter_line">
+                    <span class="label">price:</span>
+                    <div class="filter_content">
+                        <button ng-repeat="m in price.items" ng-click="$parent.filterMovie('price', m)" ng-class="{true:'btn-link item current', false:'btn-link item'}[m===price.current]">{{m}}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="mod_movies">
+        <div class="container">
+            <div class="center">
+                <img src="~/Content/images/loading.gif" ng-show="loading" />
+            </div>
+            <div class="movie_list">
+                <div class="movie_list_hd" ng-show="loading == false">
+                    <span class="option_txt">
+                        Total
+                        <em class="option_em">{{movies.Pages.TotalItems}}</em>
+                        Movies
+                    </span>
+                    <span class="option_txt">
+                        <em class="option_em">{{movies.Pages.CurrentPage}}</em>/{{movies.Pages.TotalPage}}
+                    </span>
+                </div>
+                <div class="movie_list_bd">
+                    <div class="list_item" ng-repeat="m in movies.Movies">
+                        <img ng-src="{{m.Poster}}" on-error-src="~/Content/images/movie.jpg" title="{{m.Plot}}" />
+                        <div class="m_title_price">
+                            <div class="m_title_container" title="{{m.Title}}">
+                                <strong class="m_title">{{m.Title}}</strong>
+                            </div>
+                            <div class="m_price">
+                                <em ng-if="m.HasDetail===true">${{m.Price|number:2}}</em>
+                                <em ng-if="m.HasDetail===false">loading</em>
+                            </div>
+                        </div>
+                        <div class="m_operation center">
+                            <a ng-href="/cart/add?id={{m.ID}}" class="btn btn-success" ng-disabled="m.HasDetail===false">Add To Cart</a>
+                            <a ng-href="/detail/{{m.ID}}" class="btn btn-primary" ng-disabled="m.HasDetail===false">See Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="movie_page_info">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
